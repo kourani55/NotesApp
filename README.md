@@ -2,6 +2,7 @@
 
 **Requirements**
 
+- Create Text files
 - Save Text files to phone's hard drive
 - View Text files
 - Edit/Write Text files
