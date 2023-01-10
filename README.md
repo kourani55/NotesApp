@@ -1,8 +1,9 @@
 # NotesApp
- **Requirements**
-   
-   Save Text files to phone's hard drive
-   View Text files
-   Edit/Write Text files
-   Delete Text files
-   Open Text Files
+
+**Requirements**
+
+Markup : \* Save Text files to phone's hard drive
+View Text files
+Edit/Write Text files
+Delete Text files
+Open Text Files
