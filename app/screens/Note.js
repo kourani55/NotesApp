@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native";
 import { useState } from "react";
@@ -12,7 +11,6 @@ export default function Note() {
                 placeholder="enter your kore wa pen desu here"
                 value={message}
                 onChangeText={(text) => setMessage(text)}
-                onSubmitEditing={() => alert(`Welcome to ${message}`)}
             />
         </SafeAreaView>
     );
@@ -22,7 +20,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        width: 400,
     },
 });
