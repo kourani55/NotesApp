@@ -1,51 +1,63 @@
 import React from 'react';
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Button, View } from "react-native";
+import { StyleSheet, Button, View, TouchableOpacity, Text, TextInput } from "react-native";
+import Note from './Note';
+import { Link } from '@react-navigation/native';
+
+
 
 
 export default function HomeScreen({navigation}) {
+    
+    const onPress = () => navigation.navigate("Note");
+
     return(
     <View style={styles.container}>
-        <View style={styles.buttonContainer}>
-        <View style={styles.buttonStyle}>
-        <Button title="Note" 
-        onPress={() => navigation.navigate("Note")}
-         />
+        <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
+        <Text style={styles.appButtonText}>{"New Note"}</Text>
+        </TouchableOpacity>
+
+        
+            <StatusBar style='auto' />
             </View>
-        </View>
-        <StatusBar style='auto' />
-    </View>
-    );
-}
+
+             );}
+
+
 
 const styles = StyleSheet.create({
     
     container: {
         flex: 1,
-        backgroundColor: '#f8eadd',
+        backgroundColor: '#fff',
         fontSize: "50px",
         alignItems: 'center',
         justifyContent: 'center',
     },
 
-    buttonContainer: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "flex-end",
-        padding: 200,
+    appButtonContainer: {
+        elevation: 8,
+        backgroundColor: "#009688",
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 12
+      },
+      noteButton: {
+        elevation: 8,
         backgroundColor: "#fff",
-    },
+        paddingVertical: 25,
+        paddingHorizontal: 25,
+  
+      },
+      appButtonText: {
+        fontSize: 18,
+        color: "#fff",
+        fontWeight: "bold",
+        alignSelf: "center",
+        textTransform: "uppercase"
+      },
+      
 
-    //button
-    buttonStyle: {
-        paddingLeft: 10,
-        // move left or right
-        width: 145, 
-        height: 50,
-        alignItems: 'center',
-        position: 'absolute',
-        bottom: 30,
-    },
    
 });
 
