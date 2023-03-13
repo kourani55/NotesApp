@@ -3,8 +3,11 @@ import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import moment from 'moment/moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
-const HomeScreen = ({ navigation }) => {
+
+const HomeScreen = () => {
+  const navigation = useNavigation();
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
@@ -12,15 +15,15 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   const loadNotes = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@notes');
-      if (jsonValue != null) {
-        setNotes(JSON.parse(jsonValue));
-      }
-    } catch (e) {
-      console.log(e);
+  try {
+    const jsonValue = await AsyncStorage.getItem('@notes');
+    if (jsonValue != null) {
+      setNotes(JSON.parse(jsonValue));
     }
-  };
+  } catch (e) {
+    console.log(e);
+  }
+};
 
   const saveNotes = async (newNotes) => {
     try {
@@ -38,7 +41,7 @@ const HomeScreen = ({ navigation }) => {
 
   const handleSaveNote = (note) => {
     saveNotes([...notes, note]);
-    navigation.goBack();
+    navigation.navigate('HomeScreen');
   };
 
   const handleEditNote = (note, index) => {
@@ -49,8 +52,8 @@ const HomeScreen = ({ navigation }) => {
     const newNotes = [...notes];
     newNotes[index] = note;
     saveNotes(newNotes);
-    navigation.goBack();
     route.params?.onSave?.(newNotes, index);
+    navigation.navigate('HomeScreen');
   };
 
   const handleDeleteNote = (index) => {
