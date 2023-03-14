@@ -3,13 +3,12 @@ import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import moment from 'moment/moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [notes, setNotes] = useState([]);
   
-  const route = useRoute();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -73,7 +72,7 @@ const HomeScreen = () => {
     return (
       <View style={styles.noteContainer}>
         <TouchableOpacity onPress={() => handleEditNote(item, index)} style={styles.noteTextContainer}>
-          <Text style={styles.noteText}>{item.text}</Text>
+          <Text style={styles.noteText}>{item.title}</Text>
           <Text style={styles.noteDate}>{formattedDate}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handleDeleteNote(index)} style={styles.deleteButton}>
@@ -110,6 +109,7 @@ const styles = StyleSheet.create({
   noteTextContainer: {
     flex: 1,
   },
+  
   noteText: {
     fontSize: 18,
   },
@@ -147,3 +147,4 @@ const styles = StyleSheet.create({
         fontSize: 16,
   },
 });
+

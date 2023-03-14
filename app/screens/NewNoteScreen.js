@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'rea
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
+
 const NewNoteScreen = ({ navigation, route }) => {
   
   const [text, setText] = useState(route.params?.note?.text || '');
@@ -12,12 +13,16 @@ const NewNoteScreen = ({ navigation, route }) => {
   const [fontSize, setFontSize] = useState(18);
   
   const index = route.params?.index;
-const handleSaveNote = async () => {
+  
+  const handleSaveNote = async () => {
   const note = {
     title,
     text,
     date: new Date(),
-    index // pass the index to the note object
+    index, // pass the index to the note object
+    isBold,
+    isItalic,
+    fontSize
   };
   
   // get existing notes from storage
@@ -26,7 +31,7 @@ const handleSaveNote = async () => {
   if (index !== undefined) {
     // update existing note
     existingNotes[index] = note;
-    
+    console.log(existingNotes);
   } else {
     // add new note
     existingNotes.push(note);
@@ -58,52 +63,97 @@ const handleSaveNote = async () => {
     <View style={styles.container}>
       <View style={styles.formattingBar}>
         <TouchableOpacity
-          style={[styles.formattingButton, isBold && styles.activeFormattingButton]}
+          style={[
+            styles.formattingButton, 
+            isBold && styles.activeFormattingButton
+          ]}
           onPress={handleToggleBold}
         >
-          <Text style={[styles.formattingButtonText, isBold && styles.activeFormattingButtonText]}>B</Text>
+          <Text style={[
+            styles.formattingButtonText, 
+            isBold && styles.activeFormattingButtonText
+            ]}>B</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
-          style={[styles.formattingButton, isItalic && styles.activeFormattingButton]}
+          style={[
+            styles.formattingButton, 
+            isItalic && styles.activeFormattingButton
+          ]}
           onPress={handleToggleItalic}
         >
-          <Text style={[styles.formattingButtonText, isItalic && styles.activeFormattingButtonText]}>I</Text>
+          <Text style={[
+            styles.formattingButtonText, 
+            isItalic && styles.activeFormattingButtonText
+            ]}>I</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
-          style={[styles.formattingButton, fontSize === 18 && styles.activeFormattingButton]}
+          style={[
+            styles.formattingButton, 
+            fontSize === 18 && styles.activeFormattingButton
+          ]}
           onPress={() => handleChangeFontSize(18)}
         >
-          <Text style={[styles.formattingButtonText, fontSize === 18 && styles.activeFormattingButtonText]}>A</Text>
+          <Text style={[
+            styles.formattingButtonText, 
+            fontSize === 18 && styles.activeFormattingButtonText
+            ]}>A</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
-          style={[styles.formattingButton, fontSize === 24 && styles.activeFormattingButton]}
+          style={[
+            styles.formattingButton, 
+            fontSize === 24 && styles.activeFormattingButton
+          ]}
           onPress={() => handleChangeFontSize(24)}
         >
-          <Text style={[styles.formattingButtonText, fontSize === 24 && styles.activeFormattingButtonText]}>A</Text>
+          <Text style={[
+            styles.formattingButtonText, 
+            fontSize === 24 && styles.activeFormattingButtonText
+            ]}>A</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
-          style={[styles.formattingButton, fontSize === 30 && styles.activeFormattingButton]}
+          style={[
+            styles.formattingButton, 
+            fontSize === 30 && styles.activeFormattingButton
+          ]}
           onPress={() => handleChangeFontSize(30)}
         >
-          <Text style={[styles.formattingButtonText, fontSize === 30 && styles.activeFormattingButtonText]}>A</Text>
+          <Text style={[
+            styles.formattingButtonText, 
+            fontSize === 30 && styles.activeFormattingButtonText
+            ]}>A</Text>
         </TouchableOpacity>
       </View>
+
       <TextInput
         value={title}
         onChangeText={setTitle}
-        placeholder="Enter note title"
-        style={[styles.titleInput, isBold && styles.boldText, isItalic && styles.italicText, { fontSize }]}
-        multiline
-        autoFocus
+        placeholder="Your Note Title"
+        style={[
+          styles.titleInput,
+          { marginTop: 20},
+        ]}
+        //autoFocus
       />
+
       <TextInput
         value={text}
         onChangeText={setText}
-        placeholder="Enter note text"
-        style={[styles.input, isBold && styles.boldText, isItalic && styles.italicText, { fontSize }]}
+        placeholder="Start typing..."
+        style={[
+          styles.input, 
+          isBold && styles.boldText, 
+          isItalic && styles.italicText, 
+          { fontSize },
+          { marginTop: 10},
+        ]}
         multiline
-        autoFocus
+        //autoFocus
       />
+
       <TouchableOpacity style={styles.button} onPress={handleSaveNote}>
         <Text style={styles.buttonText}>Save Note</Text>
       </TouchableOpacity>
@@ -139,13 +189,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   formattingButton: {
-    backgroundColor: '#EFEFEF',
-    padding: 5,
+    backgroundColor: '#F2F2F2',
+    padding: 10,
     borderRadius: 5,
     marginLeft: 10,
   },
   formattingButtonText: {
     fontWeight: 'bold',
+    fontSize: 18,
+    color: '#555',
   },
   boldText: {
     fontWeight: 'bold',
@@ -154,21 +206,27 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   activeFormattingButton: {
-    backgroundColor: '#D0D0D0',
+    backgroundColor: '#4CAF50',
   },
   activeFormattingButtonText: {
     color: '#FFFFFF',
+  },
+  notePreview: {
+    marginBottom: 10,
+  },
+  noteTitle: {
+    fontWeight: 'bold',
+    fontSize: 24,
   },
   titleContainer: {
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     marginBottom: 10,
-    },
-    titleInput: {
+  },
+  titleInput: {
     fontWeight: 'bold',
-    fontSize: 24,
-    },
-    
+    fontSize: 30,
+  },
 });
 
 export default NewNoteScreen;

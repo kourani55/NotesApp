@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native';
 import NewNoteScreen from './screens/NewNoteScreen';
 import HomeScreen from './screens/HomeScreen';
+import { StyleSheet } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +20,15 @@ export default function App() {
     <Stack.Screen
       name="NewNoteScreen"
       component={NewNoteScreen}
-      options={{title: "New Note"}}
+      options={{  
+        
+        headerShown: true,
+        headerBackTitleVisible: false,
+        headerTransparent: true,
+        title: 'Notes',
+        headerTintColor: "#ccc",
+        headerTitleAlign: 'left',
+     }}
     />
     </Stack.Navigator>
   </NavigationContainer>
