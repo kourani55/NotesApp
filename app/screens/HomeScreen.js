@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 import moment from 'moment/moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Feather';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -84,14 +85,14 @@ const HomeScreen = () => {
   };
 
   return (
-    <View>
+    <View style = {styles.container}>
       <FlatList
         data={notes}
         renderItem={renderNote}
         keyExtractor={(item, index) => index.toString()}
       />
       <TouchableOpacity style={styles.noteButton} onPress={handleNewNote}>
-        <Text style={styles.noteButtonText}>New Note</Text>
+        <Icon name="edit" size={30} color="#5A5A5A" />
       </TouchableOpacity>
     </View>
   );
@@ -100,6 +101,11 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+
+  container: {
+    flex: 1 
+    
+  },
   noteContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -112,10 +118,11 @@ const styles = StyleSheet.create({
   },
   
   noteText: {
-    fontSize: 18,
+    fontSize: 20,
+    color: '#5A5A5A',
   },
   noteDate: {
-    fontSize: 12,
+    fontSize: 15,
     color: '#999999',
     marginTop: 5,
   },
@@ -130,22 +137,26 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
   },
-
   noteButton: {
-        backgroundColor: '#f8deaa',
-        padding: 15,
-        borderRadius: 10,
-        marginBottom: 20,
-        shadowColor: 'black',
-        shadowOffset: {height: 2, width: 0.5},
-        shadowOpacity: 0.5,
-        shadowRadius: 6,
-        elevation: 3, 
+    position: 'absolute',
+    backgroundColor: '#f8deaa',
+    padding: 15,
+    height: 60,
+    width: 60,
+    borderRadius: 10,
+    marginBottom: 20,
+    shadowColor: 'black',
+    shadowOffset: {height: 2, width: 0.5},
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    elevation: 3, 
+    right: 40,
+    bottom: 40,
   },
   noteButtonText: {
-        fontWeight: '500',
-        color: 'black',
-        fontSize: 16,
+    fontWeight: '500',
+    color: 'black',
+    fontSize: 16,
   },
 });
 

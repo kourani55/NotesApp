@@ -1,27 +1,33 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SafeAreaView } from 'react-native';
 import NewNoteScreen from './screens/NewNoteScreen';
 import HomeScreen from './screens/HomeScreen';
-import { StyleSheet } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  
   return (
   <NavigationContainer>
     <Stack.Navigator>
       <Stack.Screen
       name="HomeScreen"
       component={HomeScreen}
-      options={{title: "Home"}}
+      options={{
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: '#f2f2f2',
+        },
+        headerTitleStyle: 
+        { fontSize: 28, fontWeight: '600'},
+        title: "My Notes"
+      }}
     />
     <Stack.Screen
       name="NewNoteScreen"
       component={NewNoteScreen}
       options={{  
-        
         headerShown: true,
         headerBackTitleVisible: false,
         headerTransparent: true,
