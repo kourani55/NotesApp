@@ -68,11 +68,12 @@ const HomeScreen = () => {
 
   const renderNote = ({ item, index }) => {
     const formattedDate = moment(item.date).format('LLL');
-
+    const noteTitle = item.title ? item.title : "No Title";
+  
     return (
       <View style={styles.noteContainer}>
         <TouchableOpacity onPress={() => handleEditNote(item, index)} style={styles.noteTextContainer}>
-          <Text style={styles.noteText}>{item.title}</Text>
+          <Text style={styles.noteText}>{noteTitle}</Text>
           <Text style={styles.noteDate}>{formattedDate}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handleDeleteNote(index)} style={styles.deleteButton}>

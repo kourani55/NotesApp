@@ -61,6 +61,32 @@ const NewNoteScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      
+      <TextInput
+        value={title}
+        onChangeText={setTitle}
+        placeholder="Your Note Title"
+        style={[
+          styles.titleInput,
+          { marginTop: 80 },
+        ]}
+        //autoFocus
+      />
+
+      <TextInput
+        value={text}
+        onChangeText={setText}
+        placeholder="Start typing..."
+        style={[
+          styles.input, 
+          isBold && styles.boldText, 
+          isItalic && styles.italicText, 
+          { fontSize },
+          { marginTop: 10},
+        ]}
+        multiline
+        //autoFocus
+      />
       <View style={styles.formattingBar}>
         <TouchableOpacity
           style={[
@@ -128,31 +154,6 @@ const NewNoteScreen = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
 
-      <TextInput
-        value={title}
-        onChangeText={setTitle}
-        placeholder="Your Note Title"
-        style={[
-          styles.titleInput,
-          { marginTop: 20},
-        ]}
-        //autoFocus
-      />
-
-      <TextInput
-        value={text}
-        onChangeText={setText}
-        placeholder="Start typing..."
-        style={[
-          styles.input, 
-          isBold && styles.boldText, 
-          isItalic && styles.italicText, 
-          { fontSize },
-          { marginTop: 10},
-        ]}
-        multiline
-        //autoFocus
-      />
 
       <TouchableOpacity style={styles.button} onPress={handleSaveNote}>
         <Text style={styles.buttonText}>Save Note</Text>
@@ -221,7 +222,6 @@ const styles = StyleSheet.create({
   titleContainer: {
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    marginBottom: 10,
   },
   titleInput: {
     fontWeight: 'bold',
