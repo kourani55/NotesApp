@@ -6,31 +6,36 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const NewNoteScreen = ({ navigation, route }) => {
   
   const [text, setText] = useState(route.params?.note?.text || '');
+  const [title, setTitle] = useState(route.params?.note?.title || '');
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [fontSize, setFontSize] = useState(18);
-
+  
   const handleSaveNote = async () => {
     const note = {
+      title,
       text,
       date: new Date(),
     };
     
     // get existing notes from storage
-    const existingNotes = JSON.parse(await AsyncStorage.getItem('notes')) || [];
+    const existingNotes = JSON.parse(await AsyncStorage.getItem('@notes')) || [];
 
     if (route.params?.note) {
       const index = route.params.note.index;
       existingNotes[index] = note;
+      
     } else {
       existingNotes.push(note);
+      //console.log("ElseexistingNote: ", note)
     }
 
     //saves updated notes
-    await AsyncStorage.setItem('notes', JSON.stringify(existingNotes));
+    await AsyncStorage.setItem('@notes', JSON.stringify(existingNotes));
 
     //send updated note to homescreen
     route.params?.onSave?.(note);
+    console.log("NewNoteScreen Pass: ", note);
     navigation.navigate('HomeScreen');
   };
 
@@ -80,6 +85,14 @@ const NewNoteScreen = ({ navigation, route }) => {
           <Text style={[styles.formattingButtonText, fontSize === 30 && styles.activeFormattingButtonText]}>A</Text>
         </TouchableOpacity>
       </View>
+      <TextInput
+        value={title}
+        onChangeText={setTitle}
+        placeholder="Enter note title"
+        style={[styles.titleInput, isBold && styles.boldText, isItalic && styles.italicText, { fontSize }]}
+        multiline
+        autoFocus
+      />
       <TextInput
         value={text}
         onChangeText={setText}
@@ -143,6 +156,16 @@ const styles = StyleSheet.create({
   activeFormattingButtonText: {
     color: '#FFFFFF',
   },
+  titleContainer: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    marginBottom: 10,
+    },
+    titleInput: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    },
+    
 });
 
 export default NewNoteScreen;
