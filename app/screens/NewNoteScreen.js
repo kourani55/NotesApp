@@ -11,33 +11,36 @@ const NewNoteScreen = ({ navigation, route }) => {
   const [isItalic, setIsItalic] = useState(false);
   const [fontSize, setFontSize] = useState(18);
   
-  const handleSaveNote = async () => {
-    const note = {
-      title,
-      text,
-      date: new Date(),
-    };
-    
-    // get existing notes from storage
-    const existingNotes = JSON.parse(await AsyncStorage.getItem('@notes')) || [];
-
-    if (route.params?.note) {
-      const index = route.params.note.index;
-      existingNotes[index] = note;
-      
-    } else {
-      existingNotes.push(note);
-      //console.log("ElseexistingNote: ", note)
-    }
-
-    //saves updated notes
-    await AsyncStorage.setItem('@notes', JSON.stringify(existingNotes));
-
-    //send updated note to homescreen
-    route.params?.onSave?.(note);
-    console.log("NewNoteScreen Pass: ", note);
-    navigation.navigate('HomeScreen');
+  const index = route.params?.index;
+const handleSaveNote = async () => {
+  const note = {
+    title,
+    text,
+    date: new Date(),
+    index // pass the index to the note object
   };
+  
+  // get existing notes from storage
+  const existingNotes = JSON.parse(await AsyncStorage.getItem('@notes')) || [];
+
+  if (index !== undefined) {
+    // update existing note
+    existingNotes[index] = note;
+    
+  } else {
+    // add new note
+    existingNotes.push(note);
+    
+  }
+
+  //saves updated notes
+  await AsyncStorage.setItem('@notes', JSON.stringify(existingNotes));
+
+  //send updated note to homescreen
+  route.params?.onSave?.(note);
+  console.log("Note saved!");
+  navigation.goBack();
+};
 
   const handleToggleBold = () => {
     setIsBold(!isBold);

@@ -3,33 +3,38 @@ import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import moment from 'moment/moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
-
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [notes, setNotes] = useState([]);
+  
+  const route = useRoute();
 
   useEffect(() => {
-    loadNotes();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      loadNotes();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const loadNotes = async () => {
-  try {
-    const jsonValue = await AsyncStorage.getItem('@notes');
-    if (jsonValue != null) {
-      setNotes(JSON.parse(jsonValue));
+    try {
+      const jsonValue = await AsyncStorage.getItem('@notes');
+      if (jsonValue != null) {
+        setNotes(JSON.parse(jsonValue));
+      }
+    } catch (e) {
+      console.log(e);
     }
-  } catch (e) {
-    console.log(e);
-  }
-};
+  };
 
   const saveNotes = async (newNotes) => {
     try {
       const jsonValue = JSON.stringify(newNotes);
       await AsyncStorage.setItem('@notes', jsonValue);
-      setNotes(newNotes);
+      setNotes([...newNotes]); // update notes state by creating a new array
     } catch (e) {
       console.log(e);
     }
@@ -40,22 +45,22 @@ const HomeScreen = () => {
   };
 
   const handleSaveNote = (note) => {
-    saveNotes([...notes, note]);
-    navigation.navigate('HomeScreen');
+    const index = note.index;
+    const newNotes = [...notes];
+    if (index !== undefined) {
+      // update existing note
+      newNotes[index] = note;
+    } else {
+      // add new note
+      newNotes.push(note);
+    }
+    saveNotes(newNotes);
   };
 
   const handleEditNote = (note, index) => {
-    navigation.navigate('NewNoteScreen', { onSave: handleUpdateNote, note, index });
+    navigation.navigate('NewNoteScreen', { onSave: handleSaveNote, note, index });
   };
-
-  const handleUpdateNote = (note, index) => {
-    const newNotes = [...notes];
-    newNotes[index] = note;
-    saveNotes(newNotes);
-    route.params?.onSave?.(newNotes, index);
-    navigation.navigate('HomeScreen');
-  };
-
+  
   const handleDeleteNote = (index) => {
     const newNotes = [...notes];
     newNotes.splice(index, 1);
@@ -85,8 +90,8 @@ const HomeScreen = () => {
         renderItem={renderNote}
         keyExtractor={(item, index) => index.toString()}
       />
-      <TouchableOpacity style = {styles.noteButton}onPress={handleNewNote}>
-        <Text style = {styles.noteButtonText}>New Note</Text>
+      <TouchableOpacity style={styles.noteButton} onPress={handleNewNote}>
+        <Text style={styles.noteButtonText}>New Note</Text>
       </TouchableOpacity>
     </View>
   );
