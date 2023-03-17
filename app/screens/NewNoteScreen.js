@@ -25,6 +25,7 @@ const NewNoteScreen = ({ navigation, route }) => {
     fontSize
   };
   
+  
   // get existing notes from storage
   const existingNotes = JSON.parse(await AsyncStorage.getItem('@notes')) || [];
 
@@ -58,6 +59,8 @@ const NewNoteScreen = ({ navigation, route }) => {
   const handleChangeFontSize = (size) => {
     setFontSize(size);
   };
+
+  
 
   return (
     <View style={styles.container}>
@@ -172,13 +175,14 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   button: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#f8deaa',
     padding: 10,
     borderRadius: 5,
     marginTop: 10,
+    borderRadius: 10,
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: '#5A5A5A',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
@@ -198,7 +202,7 @@ const styles = StyleSheet.create({
   formattingButtonText: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: '#555',
+    color: '#5A5A5A',
   },
   boldText: {
     fontWeight: 'bold',
@@ -207,7 +211,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   activeFormattingButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#606060',
   },
   activeFormattingButtonText: {
     color: '#FFFFFF',
