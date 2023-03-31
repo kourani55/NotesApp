@@ -8,9 +8,9 @@ const NewNoteScreen = ({ navigation, route }) => {
   
   const [text, setText] = useState(route.params?.note?.text || '');
   const [title, setTitle] = useState(route.params?.note?.title || '');
-  const [isBold, setIsBold] = useState(false);
-  const [isItalic, setIsItalic] = useState(false);
-  const [fontSize, setFontSize] = useState(18);
+  const [isBold, setIsBold] = useState(route.params?.note?.isBold);
+  const [isItalic, setIsItalic] = useState(route.params?.note?.isItalic);
+  const [fontSize, setFontSize] = useState(route.params?.note?.fontSize || 18);
   
   const index = route.params?.index;
   
