@@ -34,7 +34,8 @@ const HomeScreen = () => {
     try {
       const jsonValue = JSON.stringify(newNotes);
       await AsyncStorage.setItem('@notes', jsonValue);
-      setNotes([...newNotes]); // update notes state by creating a new array
+      // array to update notes state 
+      setNotes([...newNotes]); 
     } catch (e) {
       console.log(e);
     }

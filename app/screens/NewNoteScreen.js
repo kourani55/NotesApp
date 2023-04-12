@@ -19,7 +19,8 @@ const NewNoteScreen = ({ navigation, route }) => {
     title,
     text,
     date: new Date(),
-    index, // pass the index to the note object
+    // pass index to note object
+    index, 
     isBold,
     isItalic,
     fontSize
